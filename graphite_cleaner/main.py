@@ -84,6 +84,7 @@ def parse_ignore_file(f):
 @arg('--path', default='/opt/graphite/storage/whisper',
      help='path to Graphite Whisper storage directory')
 @arg('--noinput', action='store_true')
+@arg('-n', '--dry-run', action='store_true')
 @arg('-i', '--ignorefile',
      help='file containing regex patterns specyfing paths to ignore')
 @arg('-l', '--loglevel', default='ERROR')
@@ -111,6 +112,9 @@ def remove_stale_files(args):
               total_size=total_size / BYTES_TO_MEGABYTES,
               percent=float(size) / total_size if total_size != 0 else 0,
               count=len(files))
+
+    if args.dry_run:
+        return
 
     if not args.noinput:
         print YELLOW.format('The files listed above are going to be removed. '
