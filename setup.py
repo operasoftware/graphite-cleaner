@@ -7,8 +7,8 @@ setup(
     version='0.0.6',
     description='Graphite Whisper stale database files remover',
     author='Services Wroclaw Team',
-    author_email='sync-bugs@opera.com',
-    url='https://sync.opera.com',
+    author_email='svc-code@opera.com',
+    url='https://opera.com',
     packages=find_packages(),
     entry_points={'console_scripts': [
         'graphite-cleaner = graphite_cleaner.main:main']
