@@ -86,16 +86,21 @@ def parse_ignore_file(f):
 @arg('--noinput', action='store_true')
 @arg('-n', '--dry-run', action='store_true')
 @arg('-i', '--ignorefile',
-     help='file containing regex patterns specyfing paths to ignore')
+     help='file containing regex patterns specyfing paths to ignore',
+     default='/etc/graphite-cleaner/ignore.lst')
 @arg('-l', '--loglevel', default='ERROR')
 def remove_stale_files(args):
     logger.setLevel(logging.getLevelName(args.loglevel))
 
     print 'Graphite Whisper stale database files remover\n'
 
-    ignore_patterns = (
-        parse_ignore_file(open(args.ignorefile))
-        if args.ignorefile is not None else None)
+    ignore_patterns = None
+
+    if args.ignorefile:
+        if os.path.exists(args.ignorefile):
+            ignore_patterns = parse_ignore_file(open(args.ignorefile))
+        else:
+            print 'Ignore file %s does not exist.' % args.ignorefile
 
     files, size, total_size = get_stale_files(args.path, args.days, ignore_patterns)
 
