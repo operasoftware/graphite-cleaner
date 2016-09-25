@@ -62,7 +62,7 @@ def remove_empty_folders(path):
         for dirname in dirnames:
             try:
                 os.rmdir(os.path.realpath(os.path.join(root, dirname)))
-                print GREEN.format('[REMOVED]'), os.path.join(root, dirname)
+                print(GREEN.format('[REMOVED]'), os.path.join(root, dirname))
             except OSError as exception:
                 if exception.errno != errno.ENOTEMPTY:
                     raise
@@ -92,7 +92,7 @@ def parse_ignore_file(f):
 def remove_stale_files(args):
     logger.setLevel(logging.getLevelName(args.loglevel))
 
-    print 'Graphite Whisper stale database files remover\n'
+    print('Graphite Whisper stale database files remover\n')
 
     ignore_patterns = None
 
@@ -100,16 +100,16 @@ def remove_stale_files(args):
         if os.path.exists(args.ignorefile):
             ignore_patterns = parse_ignore_file(open(args.ignorefile))
         else:
-            print 'Ignore file %s does not exist.' % args.ignorefile
+            print('Ignore file %s does not exist.' % args.ignorefile)
 
     files, size, total_size = get_stale_files(args.path, args.days, ignore_patterns)
 
     if not files:
-        print 'No deletable files found.'
+        print('No deletable files found.')
         return
 
     for file_path in files:
-        print file_path
+        print(file_path)
 
     print('Found {count} files. '
           'Size: {size:.2f}MB/{total_size:.2f}MB ({percent:.2%})').format(
@@ -122,23 +122,23 @@ def remove_stale_files(args):
         return
 
     if not args.noinput:
-        print YELLOW.format('The files listed above are going to be removed. '
-                            'Continue? [y/N]')
-        choice = raw_input().lower()
+        print( YELLOW.format('The files listed above are going to be removed. '
+                            'Continue? [y/N]'))
+        choice = input().lower()
 
         if choice != 'y':
-            print YELLOW.format('Operation aborted.')
+            print(YELLOW.format('Operation aborted.'))
             return
 
     for file_path in files:
         try:
             os.remove(file_path)
-            print GREEN.format('[REMOVED]'), file_path
+            print(GREEN.format('[REMOVED]'), file_path)
         except OSError as exception:
-            print RED.format('[ERROR]'), file_path
-            print exception
+            print(RED.format('[ERROR]'), file_path)
+            print(exception)
     remove_empty_folders(args.path)
-    print 'Finished.'
+    print('Finished.')
 
 
 def main():
