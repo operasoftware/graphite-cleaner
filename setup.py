@@ -14,6 +14,6 @@ setup(
         'graphite-cleaner = graphite_cleaner.main:main']
     },
     install_requires=[
-        'argh==0.24.1'
+        'argh==0.26.2'
     ]
 )
