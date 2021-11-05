@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='graphite-cleaner',
-    version='0.1.2',
+    version='0.1.3',
     description='Graphite Whisper stale database files remover',
     author='Services Wroclaw Team',
     author_email='svc-code@opera.com',
